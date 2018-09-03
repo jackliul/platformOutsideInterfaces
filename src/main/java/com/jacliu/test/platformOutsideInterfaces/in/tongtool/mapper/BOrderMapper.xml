@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jacliu.test.platformOutsideInterfaces.in.tongtool.mapper.BOrderMapper" >
+  <resultMap id="orderResultMap" type="com.jacliu.test.platformOutsideInterfaces.in.tongtool.domain.BOrder" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="carrier_company_id" property="carrierCompanyId" jdbcType="INTEGER" />
+    <result column="shipper_company_id" property="shipperCompanyId" jdbcType="INTEGER" />
+    <result column="carrier_company_name" property="carrierCompanyName" jdbcType="VARCHAR" />
+    <result column="shipper_company_name" property="shipperCompanyName" jdbcType="VARCHAR" />
+    <result column="waybill_no" property="waybillNo" jdbcType="VARCHAR" />
+    <result column="trans_no" property="transNo" jdbcType="VARCHAR" />
+    <result column="ref_no" property="refNo" jdbcType="VARCHAR" />
+    <result column="trans_sort" property="transSort" jdbcType="VARCHAR" />
+    <result column="trans_type" property="transType" jdbcType="VARCHAR" />
+    <result column="stano" property="stano" jdbcType="VARCHAR" />
+    <result column="station" property="station" jdbcType="VARCHAR" />
+    <result column="station_en" property="stationEn" jdbcType="VARCHAR" />
+    <result column="pcs" property="pcs" jdbcType="INTEGER" />
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+    <result column="actual_weight" property="actualWeight" jdbcType="DECIMAL" />
+    <result column="vol_weight" property="volWeight" jdbcType="DECIMAL" />
+    <result column="bill_weight" property="billWeight" jdbcType="DECIMAL" />
+    <result column="goods_type" property="goodsType" jdbcType="VARCHAR" />
+    <result column="is_insurance" property="isInsurance" jdbcType="TINYINT" />
+    <result column="declare_value" property="declareValue" jdbcType="VARCHAR" />
+    <result column="advance" property="advance" jdbcType="DECIMAL" />
+    <result column="pay_type" property="payType" jdbcType="VARCHAR" />
+    <result column="cargo_name" property="cargoName" jdbcType="VARCHAR" />
+    <result column="package_type" property="packageType" jdbcType="VARCHAR" />
+    <result column="currency_type" property="currencyType" jdbcType="VARCHAR" />
+    <result column="cargo_name_en" property="cargoNameEn" jdbcType="VARCHAR" />
+    <result column="unit_price" property="unitPrice" jdbcType="DECIMAL" />
+    <result column="payment" property="payment" jdbcType="VARCHAR" />
+    <result column="is_problem" property="isProblem" jdbcType="TINYINT" />
+    <result column="finish_time" property="finishTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="declare_type" property="declareType" jdbcType="TINYINT" />
+    <result column="sender_name" property="senderName" jdbcType="VARCHAR" />
+    <result column="sender_company_name" property="senderCompanyName" jdbcType="VARCHAR" />
+    <result column="sender_tel" property="senderTel" jdbcType="VARCHAR" />
+    <result column="sender_postcode" property="senderPostcode" jdbcType="VARCHAR" />
+    <result column="sender_province" property="senderProvince" jdbcType="VARCHAR" />
+    <result column="sender_city" property="senderCity" jdbcType="VARCHAR" />
+    <result column="sender_addr" property="senderAddr" jdbcType="VARCHAR" />
+    <result column="sender_addtuo" property="senderAddtuo" jdbcType="VARCHAR" />
+    <result column="sender_addthree" property="senderAddthree" jdbcType="VARCHAR" />
+    <result column="sender_email" property="senderEmail" jdbcType="VARCHAR" />
+    <result column="sender_payment" property="senderPayment" jdbcType="VARCHAR" />
+    <result column="receiver_name" property="receiverName" jdbcType="VARCHAR" />
+    <result column="receiver_company_name" property="receiverCompanyName" jdbcType="VARCHAR" />
+    <result column="receiver_tel" property="receiverTel" jdbcType="VARCHAR" />
+    <result column="receiver_postcode" property="receiverPostcode" jdbcType="VARCHAR" />
+    <result column="receiver_country" property="receiverCountry" jdbcType="VARCHAR" />
+    <result column="receiver_province" property="receiverProvince" jdbcType="VARCHAR" />
+    <result column="receiver_city" property="receiverCity" jdbcType="VARCHAR" />
+    <result column="receiver_addr" property="receiverAddr" jdbcType="VARCHAR" />
+    <result column="receiver_addtuo" property="receiverAddtuo" jdbcType="VARCHAR" />
+    <result column="receiver_addthree" property="receiverAddthree" jdbcType="VARCHAR" />
+    <result column="receiver_email" property="receiverEmail" jdbcType="VARCHAR" />
+    <result column="recriver_payment" property="recriverPayment" jdbcType="VARCHAR" />
+    <result column="create_user_no" property="createUserNo" jdbcType="VARCHAR" />
+    <result column="check_user_no" property="checkUserNo" jdbcType="VARCHAR" />
+    <result column="update_user_no" property="updateUserNo" jdbcType="VARCHAR" />
+    <result column="is_del" property="isDel" jdbcType="BIT" />
+    <result column="valuation_cusrrency" property="valuationCusrrency" jdbcType="VARCHAR" />
+    <result column="receiver_universal_compile" property="receiverUniversalCompile" jdbcType="VARCHAR" />
+    <result column="dest_no" property="destNo" jdbcType="VARCHAR" />
+    <result column="sender_country" property="senderCountry" jdbcType="VARCHAR" />
+    <result column="check_time" property="checkTime" jdbcType="TIMESTAMP" />
+    <result column="customer_code" property="customerCode" jdbcType="VARCHAR" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="customer_shipper_company_id" property="customerShipperCompanyId" jdbcType="INTEGER" />
+    <result column="customer_shipper_company_name" property="customerShipperCompanyName" jdbcType="VARCHAR" />
+    <result column="order_stano" property="orderStano" jdbcType="VARCHAR" />
+    <result column="order_station" property="orderStation" jdbcType="VARCHAR" />
+    <result column="order_station_en" property="orderStationEn" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="amendment" property="amendment" jdbcType="VARCHAR" />
+    <result column="initiation_type" property="initiationType" jdbcType="TINYINT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="trans_sender_name" property="transSenderName" jdbcType="VARCHAR" />
+    <result column="trans_sender_company_name" property="transSenderCompanyName" jdbcType="VARCHAR" />
+    <result column="trans_sender_tel" property="transSenderTel" jdbcType="VARCHAR" />
+    <result column="trans_sender_payment" property="transSenderPayment" jdbcType="VARCHAR" />
+    <result column="trans_sender_postcode" property="transSenderPostcode" jdbcType="VARCHAR" />
+    <result column="trans_sender_email" property="transSenderEmail" jdbcType="VARCHAR" />
+    <result column="trans_sender_addr" property="transSenderAddr" jdbcType="VARCHAR" />
+    <result column="trans_sender_addtuo" property="transSenderAddtuo" jdbcType="VARCHAR" />
+    <result column="trans_sender_addthree" property="transSenderAddthree" jdbcType="VARCHAR" />
+    <result column="trans_sender_province" property="transSenderProvince" jdbcType="VARCHAR" />
+    <result column="trans_sender_city" property="transSenderCity" jdbcType="VARCHAR" />
+    <result column="trans_sender_country" property="transSenderCountry" jdbcType="VARCHAR" />
+  </resultMap>
+  
+   <select id="find" resultMap="orderResultMap" parameterType="java.util.Map">
+		SELECT
+			*
+		FROM
+			b_order			
+	</select>
+	
+</mapper>

@@ -1,0 +1,227 @@
+server:
+  port: 8088
+  tomcat:
+    max-threads: 800
+    uri-encoding: UTF-8
+  
+spring:
+  application:
+      name: platformOutsideInterfaces
+  boot:
+    admin:
+      client:
+        url: http://localhost:18080
+  datasource:
+      druid:
+        interfaces:
+          driverClassName: com.mysql.jdbc.Driver
+          driver-class-name: com.mysql.jdbc.Driver
+          filters: stat,wall
+          initial-size: 1
+          max-active: 8
+          max-wait: 60000
+          min-evictable-idle-time-millis: 30000
+          min-idle: 1
+          username: root
+          password: Root!111
+          test-on-borrow: false
+          test-on-return: false
+          test-while-idle: true
+          validation-query: SELECT 1 FROM DUAL
+          time-between-eviction-runs-millis: 60000
+          url: jdbc:mysql://192.168.8.31:3306/platform_outside_interfaces_test?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+          stat-view-servlet:
+            loginUsername: interfaces
+            loginPassword: interfaces@123
+            resetEnable: false
+            urlPattern: /druid/*
+          web-stat-filter:
+            exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,*.jsp,/druid/*'
+            profileEnable: true
+            sessionStatEnable: false
+            urlPattern: /*
+        omsweb:
+          driverClassName: com.mysql.jdbc.Driver
+          driver-class-name: com.mysql.jdbc.Driver
+          filters: stat,wall
+          initial-size: 1
+          max-active: 8
+          max-wait: 60000
+          min-evictable-idle-time-millis: 30000
+          min-idle: 1
+          username: root
+          password: Root!111
+          test-on-borrow: false
+          test-on-return: false
+          test-while-idle: true
+          validation-query: SELECT 1 FROM DUAL
+          time-between-eviction-runs-millis: 60000
+          url: jdbc:mysql://192.168.8.31:3306/oms_web?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+          stat-view-servlet:
+            loginUsername: omsweb
+            loginPassword: omsweb@123
+            resetEnable: false
+            urlPattern: /druid/*
+          web-stat-filter:
+            exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,*.jsp,/druid/*'
+            profileEnable: true
+            sessionStatEnable: false
+            urlPattern: /*
+        usercenter: 
+          driverClassName:  com.mysql.jdbc.Driver
+          driver-class-name: com.mysql.jdbc.Driver
+          filters: stat,wall
+          initial-size: 1
+          max-active: 8
+          max-wait: 60000
+          min-evictable-idle-time-millis: 30000
+          min-idle: 1
+          username: root
+          password: Root!111
+          test-on-borrow: false
+          test-on-return: false
+          test-while-idle: true
+          time-between-eviction-runs-millis: 60000
+          url: jdbc:mysql://192.168.8.31:3306/user_center?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+          validation-query: SELECT 1 FROM DUAL
+          stat-view-servlet:
+            loginUsername: usercenter
+            loginPassword: usercenter@123
+            resetEnable: false
+            urlPattern: /druid/*
+          web-stat-filter:
+            exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,*.jsp,/druid/*'
+            profileEnable: true
+            sessionStatEnable: false
+            urlPattern: /*
+  rabbitmq:
+    host: 192.168.8.35
+    port: 5672
+    username: admin
+    password: admin@123
+    virtualHost: /
+    publisher-confirms: true
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: manual
+        concurrency: 1
+        max-concurrency: 1
+        retry:
+          enabled: true
+  redis:
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 9
+        max-wait: -1
+        min-idle: 0
+        testOnBorrow: false
+        testOnReturn: false
+    zm-dev:
+      database: 0
+      host: 192.168.8.32
+      port: 6379
+      password: na#12%78P
+    zm-test:
+      database: 1
+      host: 47.106.121.230
+      port: 6000
+      password: R4*@wq!cx
+    zm-pro:
+      database: 0
+      host:
+      port:
+      password:
+    fardar-dev:
+      database: 0
+      host: 填redis的ip地址
+      port: 填redis的端口号
+      password: 填redis的密码
+    fardar-test:
+      database: 0
+      host:
+      port:
+      password:
+    fardar-pro:
+      database: 0
+      host:
+      port:
+      password:
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+              
+#pagehelper
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+    returnPageInfo: check
+    
+swagger:
+  enabled: true
+  exclude-path: /error, /ops/**
+  global-response-message:
+    get:
+    - code: 401
+      message: 401get
+    - code: 500
+      message: 500get
+      modelRef: ERROR
+    post:
+    - code: 500
+      message: 500post
+      modelRef: ERROR
+  license: Apache License, Version 2.0
+  licenseUrl: https://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfServiceUrl: http://localhost:8089/swagger-ui.html
+  title: oms平台对外文档中心
+  ui-config:
+    json-editor: false
+    request-timeout: 5000
+    show-request-headers: true
+    submit-methods: get,delete
+  version: 1.4.0.RELEASE
+  apply-default-response-messages: false
+  base-package: com.jacliu.test.platformOutsideInterfaces
+  base-path: /**
+  contact:
+    email: liuli@intelink.net
+    name: jacliu
+    url: http://localhost:8089/swagger-ui.html
+  description: oms平台接口文档:具体示例请到下载 <a href="http://demo.i-oms.cn/api.zip" target="_blank">api.zip</a>
+  docket:
+    omsWeb:
+      basePackage: com.jacliu.test.platformOutsideInterfaces.omsweb.web
+      contact:
+        email: liuli@intelink.net
+        name: jacliu
+        url: http://localhost:8089/swagger-ui.html
+      description: 订单相关接口对接文档:具体示例请到下载 <a href="http://demo.i-oms.cn/api.zip" target="_blank">api.zip</a>
+      excludePath: /ops/**
+      globalOperationParameters:
+      #termsOfServiceUrl: https://gitee.com/didispace/spring-boot-starter-swagger
+      title: omsWebApi
+      version: 1.4
+    userCenterApi:
+      basePackage: com.jacliu.test.platformOutsideInterfaces.userCenter.web
+      contact:
+        email: liuli@intelink.net
+        name: jacliu
+        url: http://localhost:8089/swagger-ui.html
+      description: 具体示例请到下载 <a href="http://demo.i-oms.cn/api.zip" target="_blank">api.zip</a>
+      excludePath: /ops/**
+      globalOperationParameters:
+      #termsOfServiceUrl: https://gitee.com/didispace/spring-boot-starter-swagger
+      title: userCenterApi
+      version: 1.4
+  
+logging:
+  config: 
+    classpath:logback-spring.xml
+      

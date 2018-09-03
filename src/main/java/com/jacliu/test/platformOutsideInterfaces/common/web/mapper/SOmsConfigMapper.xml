@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jacliu.test.platformOutsideInterfaces.common.web.mapper.SOmsConfigMapper">
+  <resultMap id="BaseResultMap" type="com.jacliu.test.platformOutsideInterfaces.common.web.domain.SOmsConfig">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="oms_appkey" jdbcType="VARCHAR" property="omsAppkey" />
+    <result column="oms_url" jdbcType="VARCHAR" property="omsUrl" />
+    <result column="oms_api_ver" jdbcType="VARCHAR" property="omsApiVer" />
+    <result column="oms_appid" jdbcType="VARCHAR" property="omsAppid" />
+    <result column="oms_secret" jdbcType="VARCHAR" property="omsSecret" />
+    <result column="oms_token" jdbcType="VARCHAR" property="omsToken" />
+    <result column="is_del" jdbcType="BIT" property="isDel" />
+    <result column="thrid_hosts" jdbcType="VARCHAR" property="thridHosts" />
+    <result column="interface_type" jdbcType="INTEGER" property="interfaceType" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+  </resultMap>
+</mapper>

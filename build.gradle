@@ -1,0 +1,159 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.4.RELEASE'
+	}
+	repositories {
+		maven{ url 'http://103.24.176.191:8081/repository/cs_group/'}
+		maven {url "https://plugins.gradle.org/m2/"}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath 'org.hidetake:gradle-ssh-plugin:2.9.0'
+		classpath "gradle.plugin.com.arenagod.gradle:mybatis-generator-plugin:1.4" 
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.hidetake.ssh'
+apply plugin: "com.arenagod.gradle.MybatisGenerator"
+
+group = 'com.jacliu.test'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	maven{ url 'http://103.24.176.191:8081/repository/cs_group/'}
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-amqp')
+	compile('org.springframework.boot:spring-boot-starter-data-redis')
+	compile('org.springframework.boot:spring-boot-starter-mail')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-actuator') 
+	compile('org.springframework.boot:spring-boot-starter-aop') 
+	compile('de.codecentric:spring-boot-admin-starter-client:2.0.1')
+	
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
+	compile group: 'com.alibaba', name: 'fastjson', version: '1.2.47'
+	compile group: 'net.intelink', name: 'jsonclientsdk_with_src', version: '1.0-SNAPSHOT'
+	compile 'cn.hutool:hutool-all:4.0.8'
+	compile group: 'org.apache.geronimo.specs', name: 'geronimo-jpa_3.0_spec', version: '1.1.1'
+	compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.0.8.Final'
+
+	compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2')
+    //mybatisGenerator 'tk.mybatis:mapper:3.3.2'
+	compile group: 'com.alibaba', name: 'druid', version: '1.1.5'
+    mybatisGenerator 'mysql:mysql-connector-java:5.1.36'
+	mybatisGenerator 'org.mybatis.generator:mybatis-generator-core:1.3.2'
+	compile group: 'com.github.pagehelper', name: 'pagehelper-spring-boot-starter', version: '1.2.5'
+	compile group: 'com.alibaba', name: 'druid-spring-boot-starter', version:'1.1.9'
+    compile group: 'tk.mybatis', name: 'mapper-spring-boot-starter', version:'2.0.0'
+	runtime('mysql:mysql-connector-java')
+
+    compile 'io.springfox:springfox-swagger2:2.9.0'
+	compile 'io.springfox:springfox-swagger-ui:2.9.0'
+	compile 'com.spring4all:swagger-spring-boot-starter:1.7.1.RELEASE' 
+
+	compile group: 'redis.clients', name: 'jedis', version: '2.9.0'
+
+	compile group: 'net.sf.dozer', name: 'dozer', version: '5.5.1'
+	compile group: 'net.sf.dozer', name: 'dozer-spring', version: '5.5.1'
+
+	runtime('org.springframework.boot:spring-boot-devtools')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+	//compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version:'1.5.10.RELEASE'
+}
+
+// gradle clean mybatisGenerator -Dfile.encoding=UTF-8
+configurations {
+   mybatisGenerator
+}
+def getDbProperties = {
+    def properties = new Properties()
+    file("src/main/resources/mybatis/generator.properties").withInputStream { inputStream ->
+        properties.load(inputStream)
+    }
+    properties;
+}
+task mybatisGenerate << {
+    def properties = getDbProperties()
+    ant.properties['targetProject'] = projectDir.path
+    ant.properties['driverClass'] = properties.getProperty("jdbc.driverClassName")
+    ant.properties['connectionURL'] = properties.getProperty("jdbc.url")
+    ant.properties['userId'] = properties.getProperty("jdbc.user")
+    ant.properties['password'] = properties.getProperty("jdbc.pass")
+    ant.properties['src_main_java'] = sourceSets.main.java.srcDirs[0].path
+    ant.properties['src_main_resources'] = sourceSets.main.resources.srcDirs[0].path
+    ant.properties['modelPackage'] = properties.getProperty("generator.modelPackage")
+    ant.properties['mapperPackage'] = properties.getProperty("generator.mapperPackage")
+    ant.properties['sqlMapperPackage'] = properties.getProperty("generator.sqlMapperPackage")
+    ant.taskdef(
+            name: 'mbgenerator',
+            classname: 'org.mybatis.generator.ant.GeneratorAntTask',
+            classpath: configurations.mybatisGenerator.asPath
+    )
+    ant.mbgenerator(overwrite: true,
+            configfile: 'generator.xml', verbose: true) {
+        propertyset {
+            propertyref(name: 'targetProject')
+            propertyref(name: 'userId')
+            propertyref(name: 'driverClass')
+            propertyref(name: 'connectionURL')
+            propertyref(name: 'password')
+            propertyref(name: 'src_main_java')
+            propertyref(name: 'src_main_resources')
+            propertyref(name: 'modelPackage')
+            propertyref(name: 'mapperPackage')
+            propertyref(name: 'sqlMapperPackage')
+        }
+    }
+}
+
+bootRun {
+    jvmArgs "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005"
+}
+
+ext {
+	env = System.getProperty("env") ?: "dev"
+    realHost = System.getProperty("realHost") ?: '192.168.8.33'  
+    realUser = System.getProperty("realUser") ?:'root'  
+    realPassword = System.getProperty("realPassword") ?:'ItVm905-3' 
+    openBrowserCmd = System.getProperty("openBrowserCmd") ?:'openBrowser.bat ' + realHost
+    jdkHome = System.getProperty("jdkHome") ?:'/home/jdkHome/'
+}
+
+ssh.settings {  
+  knownHosts = allowAnyHosts  
+}  
+
+remotes {  
+  	deployServer {  
+	    role 'masterNode'
+	    host = realHost  
+	    user = realUser  
+	    password = realPassword  
+  }
+}  
+
+// java -Xms128m -Xmx256m -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8081,suspend=n -jar /data/app/test.jar --spring.profiles.active=dev &
+// –spring.profiles.active=dev -Dlogging.path=/ --server.port=10100 
+task deploy(dependsOn:build) << { 
+  ssh.run {  
+    session(remotes.deployServer) {  
+    	execute ' rm -rf /usr/local/apps/spbootHome/platformOutsideInterfaces-0.0.1-SNAPSHOT.jar '
+    	execute ' kill -9 ` ps -ef | grep  platformOutsideInterfaces-0.0.1-SNAPSHOT  | awk \'NR==1 { print $2 }\' ` '
+		put from: buildDir.toString() + '/libs/platformOutsideInterfaces-0.0.1-SNAPSHOT.jar', into: '/usr/local/apps/spbootHome/'
+		execute   'nohup '+jdkHome+'jdk8/bin/java -jar /usr/local/apps/spbootHome/platformOutsideInterfaces-0.0.1-SNAPSHOT.jar & '
+		//execute ' nohup /home/apps/jdkHome/jdk8/bin/java -jar /home/clouds/platformOutsideInterfaces-0.0.1-SNAPSHOT.jar -–spring.profiles.active=dev --server.port=11000  >/home/clouds/logs/SpringCloudServer.log 2>&1 & '
+    }  
+  }  
+}
+
+task openBrowser(dependsOn: deploy) << {
+	def cmdResult = openBrowserCmd.execute().text.trim()
+}
