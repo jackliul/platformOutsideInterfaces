@@ -19,8 +19,7 @@ public class TongtoolInQueue {
 	@Bean("tongtool_getOrder_in_Q")
 	public Queue directQueue() {
 		Map<String, Object> args = new HashMap<>(3);
-		args.put("x-message-ttl", 60000);
-		// x-dead-letter-exchange 声明 死信交换机
+		args.put("x-message-ttl", 180000);
 		args.put("x-dead-letter-exchange", "tongtool_getOrder_in_X_DEAD");
 		// x-dead-letter-routing-key 声明 死信路由键
 		args.put("x-dead-letter-routing-key", "tongtool_getOrder_in_R");
